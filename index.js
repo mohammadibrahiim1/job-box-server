@@ -3,13 +3,18 @@ const express = require("express");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 const port = process.env.PORT || 5000;
+// pVno5hda5n6zRRt7
+// job_box
 
 const cors = require("cors");
 
 app.use(cors());
 app.use(express.json());
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.q66zrl2.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.wuwpwwx.mongodb.net/?retryWrites=true&w=majority`;
+console.log(uri);
+
+console.log(uri);
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -18,7 +23,7 @@ const client = new MongoClient(uri, {
 
 const run = async () => {
   try {
-    const db = client.db("jobbox");
+    const db = client.db("job_box");
     const userCollection = db.collection("user");
     const jobCollection = db.collection("job");
 
@@ -105,11 +110,7 @@ const run = async () => {
         arrayFilters: [{ "user.id": ObjectId(userId) }],
       };
 
-      const result = await jobCollection.updateOne(
-        filter,
-        updateDoc,
-        arrayFilter
-      );
+      const result = await jobCollection.updateOne(filter, updateDoc, arrayFilter);
       if (result.acknowledged) {
         return res.send({ status: true, data: result });
       }
