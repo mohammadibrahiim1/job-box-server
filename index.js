@@ -39,7 +39,6 @@ const run = async () => {
       const email = req.params.email;
 
       const result = await userCollection.findOne({ email });
-      console.log(result);
 
       if (result?.email) {
         return res.send({ status: true, data: result });
@@ -53,9 +52,9 @@ const run = async () => {
       const jobId = req.body.jobId;
       const email = req.body.email;
 
-      const filter = { _id: ObjectId(jobId) };
+      const filter = { _id: new ObjectId(jobId) };
       const updateDoc = {
-        $push: { applicants: { id: ObjectId(userId), email } },
+        $push: { applicants: { id: new ObjectId(userId), email } },
       };
 
       const result = await jobCollection.updateOne(filter, updateDoc);
